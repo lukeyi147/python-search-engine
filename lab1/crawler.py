@@ -349,26 +349,20 @@ class crawler(object):
     def inverted_index(self):
         return self._inverted_index_cache
 
-    # needs to be updated
     def resolved_inverted_index(self):
-        resolved_inverted_index = [ ]
+        resolved_inverted_index = { }
 
-        for index in self._inverted_index_cache:
-            word_name = ""
-            doc_name = ""
+        for word_id in self._inverted_index_cache:
+            # get word from word_id
+            word = self._word_id_cache.keys()[self._word_id_cache.values().index(word_id)]
 
-            # search for word_name given word_id
-            for word, word_id in self._word_id_cache.items():
-                if word_id == index[0]:
-                    word_name = word
+            # create new set for word in dict
+            resolved_inverted_index[word] = set()
 
-            # search for doc_name given doc_id
-            for doc, doc_id in self._doc_id_cache.items():
-                if doc_id == index[1]:
-                    doc_name = doc
-
-            # add word_name and assosiated doc_name to resolved_inverted_index
-            resolved_inverted_index.append([word_name, doc_name])
+            for doc_id in self._inverted_index_cache[word_id]:
+                # get doc from doc_id and add to set in dict
+                doc = self._doc_id_cache.keys()[self._doc_id_cache.values().index(doc_id)]
+                resolved_inverted_index[word].add(doc)
 
         return resolved_inverted_index
 
@@ -376,5 +370,5 @@ if __name__ == "__main__":
     bot = crawler(None, "urls.txt")
     bot.crawl(depth=2)
     print bot.inverted_index()
-    #print bot.resolved_inverted_index()
+    print bot.resolved_inverted_index()
 
