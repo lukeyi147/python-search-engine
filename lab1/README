@@ -1,0 +1,8 @@
+Front-end:
+python server.py
+
+Back-end:
+python crawler.py
+
+Back-end Test:
+python crawler_test.py
