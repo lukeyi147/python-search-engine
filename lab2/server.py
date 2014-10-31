@@ -61,26 +61,37 @@ def engine():
         if signed == 1:
             if user_email not in hist:    #if user not in dictionary
                 hist.update({user_email:[]})
-            print keywords
-            hist[user_email] = hist[user_email] + keywords
-            hist[user_email] = hist[user_email][-11:-1]
 
-               
-                #add keywords to end of list, then truncate before updating list in dictionary
+            # add to end of list
+            for keyword in keywords:
+                if keyword != "":
+                    hist[user_email].append(keyword)
+
+            # truncate list to only 10 most recent elemnts
+            hist[user_email] = hist[user_email][-10:]
+
+            # history shows most recent first
+            history = list(hist[user_email])
+            history.reverse()
+
+            print history
                 
-        if signed == 1 :return template('index', results = results, history = hist[user_email], sgn = signed, u_email = user_email)
+        if signed == 1 :return template('index', results = results, history = history, sgn = signed, u_email = user_email)
         if signed == 0 :return template('index', results = results, history = 0, sgn = signed, u_email = user_email)
 
     else:
     #User didn't submit keywords, display empty results, and display top 20 history
 
-        results = {}
-        #sorted_history = sorted(history.iteritems(), key=itemgetter(1), reverse=True)
-        
+        results = {}        
         if signed == 1 :
             if user_email not in hist:    #if user not in dictionary
                 hist.update({user_email:[]})
-            return template('index', results = results, history = hist[user_email], sgn = signed, u_email = user_email)
+
+            # history shows most recent first
+            history = list(hist[user_email])
+            history.reverse()
+
+            return template('index', results = results, history = history, sgn = signed, u_email = user_email)
         if signed == 0 :return template('index', results = results, history = 0, sgn = signed, u_email = user_email)
         
 @route('/redirect', method='GET')

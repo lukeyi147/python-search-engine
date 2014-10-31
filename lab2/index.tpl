@@ -26,7 +26,6 @@
 </table>
 
 %if sgn == 1 :
-    %print history
     <strong>History:</strong>
     <table id="history">
     %for i in history:
