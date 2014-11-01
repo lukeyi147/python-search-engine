@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>SimpliSearch: A Simple Search Engine</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bootstrap.css" media="screen">
+    <link rel="stylesheet" href="http://bootswatch.com/simplex/bootstrap.min.css" media="screen">
   </head>
   <body>
 
@@ -17,26 +17,24 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" target="_blank">Login</a></li>
-			%if sgn == 0 :
-			    <form action="/" method="get">
-			        <input type="submit" name="sign_in" value = "Sign In">
-			    </form>
-			    
-			%elif sgn == 1:
-			    <strong>{{u_email}}</strong>
-			    <form action="/" method="get">
-			        <input type="submit" name="sign_out" value = "Sign Out">
-			    </form>
-			%end
-
+          	%if sgn == 1:
+            <li><a href="#" target="_blank">{{u_email}}</a></li>
+            %end
           </ul>
-
         </div>
       </div>
     </div>
 
-
+	%if sgn == 0:
+	    <form action="/" method="get">
+	        <input type="submit" name="sign_in" value = "Login">
+	    </form>
+	    
+	%elif sgn == 1:
+	    <form action="/" method="get">
+	        <input type="submit" name="sign_out" value = "Logout">
+	    </form>
+	%end
 
     <div class="container">
       <div class="bs-docs-section clearfix">
@@ -50,7 +48,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -66,6 +63,7 @@
 	  </div>
 	  </form>
 
+	  	%if results:
 		<br >
 		<div class="col-lg-12">
 		    <h4>Results</h4>
@@ -79,8 +77,9 @@
 		      </ul>
 		    </div>
 		</div>
+		%end
 
-		%if sgn == 1:
+		%if sgn == 1 and history:
 		<br >
 		<div class="col-lg-12">
 		    <h4>History</h4>
