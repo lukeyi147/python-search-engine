@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>SimpliSearch: A Simple Search Engine</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://bootswatch.com/simplex/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="http://bootswatch.com/simplex/bootstrap.css" media="screen">
   </head>
   <body>
 
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-
+<br ><br ><br >
 	%if sgn == 0:
 	    <form action="/" method="get">
 	        <input type="submit" name="sign_in" value = "Login">
@@ -63,7 +63,7 @@
 	  </div>
 	  </form>
 
-	  	%if results:
+	  %if results:
 		<br >
 		<div class="col-lg-12">
 		    <h4>Results</h4>
