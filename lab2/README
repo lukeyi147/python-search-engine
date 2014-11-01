@@ -1,5 +1,21 @@
-Installation:
+#################
+Live Application:
+The search engine is running live at 54.164.28.20
 
+
+###################
+Benchmarking Setup:
+To setup the benchmarking, you need to install apache2-utils using the following command:
+sudo apt­get install apache2­utils
+
+After apache2utils is installed, you can run the follwoing command to benchmark the application:
+ab -n 100 -c 50 http://ec2-54-164-28-20.compute-1.amazonaws.com/?keywords=helloworld+foo+bar
+
+Further system usage data metrics can be found on the AWS admin console
+
+
+#############
+Installation:
 To prepare the server, you need to install the following with apt-get:
 - git
 - python-pip

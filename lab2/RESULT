@@ -1,6 +1,5 @@
 #####################
 Benchmarking Results:
-#####################
 
 Maximum number of connections that can be handled by the server before any
 connection drops:
@@ -28,7 +27,6 @@ Network Out:	250,000 Bytes
 
 #######################
 Output of benchmarking:
-#######################
 
 ubuntu@ip-172-31-53-215:~/python-search-engine/lab2$ ab -n 100 -c 50 http://ec2-54-164-28-20.compute-1.amazonaws.com/?keywords=helloworld+foo+bar
 This is ApacheBench, Version 2.3 <$Revision: 1528965 $>
