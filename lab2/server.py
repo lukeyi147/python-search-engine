@@ -22,8 +22,13 @@ app = SessionMiddleware(bottle.app(), session_opts)
      
 @route('/', method='GET')
 def engine():
+    # global hist
+    global hist
+
     # get session
     session = bottle.request.environ['beaker.session']
+
+    # check if user signed in and get user_email if signed in
     signed = 'user_email' in session
     if signed:
         user_email = session['user_email']
@@ -33,14 +38,14 @@ def engine():
         # flow step1
         flow = flow_from_clientsecrets("client_secret_864736965004-d6snoqp3e8d97nh17c9b7pgisaqhjff2.apps.googleusercontent.com.json",
             scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
-            redirect_uri="http://localhost:8080/redirect")
+            redirect_uri="http://54.164.28.20:8080/redirect")
         uri = flow.step1_get_authorize_url()
         bottle.redirect(str(uri))
         
     # handle sign_out
     if request.GET.get('sign_out',''):
         session.delete()
-        bottle.redirect("http://localhost:8080")
+        bottle.redirect("http://54.164.28.20:8080")
         
     # handle submit
     if request.GET.get('submit',''):
@@ -65,7 +70,7 @@ def engine():
                     results[keyword] += 1
 
         ##################
-        global hist
+        
         if signed == 1:
             if user_email not in hist:    #if user not in dictionary
                 hist.update({user_email:[]})
@@ -82,13 +87,12 @@ def engine():
             history = list(hist[user_email])
             history.reverse()
 
-            print history
-                
-        if signed == 1 :return template('index', results = results, history = history, sgn = signed, u_email = user_email)
-        if signed == 0 :return template('index', results = results, history = 0, sgn = signed, u_email = 0)
+            return template('index', results = results, history = history, sgn = signed, u_email = user_email)
+        else:
+            return template('index', results = results, history = 0, sgn = signed, u_email = 0)
 
     else:
-    # user didn't submit keywords, display empty results
+        # user didn't submit keywords, display empty results
         results = {}        
         if signed == 1:
             if user_email not in hist:    #if user not in dictionary
@@ -99,7 +103,7 @@ def engine():
             history.reverse()
 
             return template('index', results = results, history = history, sgn = signed, u_email = user_email)
-        if signed == 0: 
+        else: 
             return template('index', results = results, history = 0, sgn = signed, u_email = 0)
         
 @route('/redirect', method='GET')
@@ -111,7 +115,7 @@ def redirect_page():
     code = request.query.get('code', '')
     flow = flow_from_clientsecrets("client_secret_864736965004-d6snoqp3e8d97nh17c9b7pgisaqhjff2.apps.googleusercontent.com.json",
         scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
-        redirect_uri="http://localhost:8080/redirect")
+        redirect_uri="http://54.164.28.20:8080/redirect")
     credentials = flow.step2_exchange(code)
     token = credentials.id_token['sub']
 
@@ -124,9 +128,9 @@ def redirect_page():
     session['user_email'] = user_document['email']
     session.save()
 
-    bottle.redirect("http://localhost:8080")
+    bottle.redirect("http://54.164.28.20:8080")
     
     
-run(app = app, host='localhost', port=8080, debug=True)
+run(app = app, host='54.164.28.20', port=8080, debug=True)
 
 
