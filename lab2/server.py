@@ -36,7 +36,7 @@ def engine():
     # handle sign_in
     if request.GET.get('sign_in',''):
         # flow step1
-        flow = flow_from_clientsecrets("client_secret_864736965004-d6snoqp3e8d97nh17c9b7pgisaqhjff2.apps.googleusercontent.com.json",
+        flow = flow_from_clientsecrets("client_secret_654777846488-i5oehn8o4rf262ge2afqjebk81hhd45h.apps.googleusercontent.com.json",
             scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
             redirect_uri="http://ec2-54-164-28-20.compute-1.amazonaws.com/redirect")
         uri = flow.step1_get_authorize_url()
