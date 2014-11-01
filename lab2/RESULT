@@ -1,0 +1,75 @@
+#####################
+Benchmarking Results:
+#####################
+
+Maximum number of connections that can be handled by the server before any
+connection drops:
+50 concurrent connections
+
+
+Maximum number of requests per second (RPS) that can be sustained by the server
+when operating with maximum number of connections:
+Requests per second:	160.80 [#/sec] (mean)
+
+Average and 99 percentile of response time or latency per request:
+Average: 			6.218 [ms] (mean, accross all concurrent rquests)
+99th Percentile: 	621 [ms]
+
+
+Utilization of CPU, memory, disk IO, and network when max performance is sustained:
+CPU: 			40%
+Memory:			2.7%
+Disk IO:		0%
+Network In:		150,000 Bytes
+Network Out:	250,000 Bytes
+
+
+
+
+#######################
+Output of benchmarking:
+#######################
+
+ubuntu@ip-172-31-53-215:~/python-search-engine/lab2$ ab -n 100 -c 50 http://ec2-54-164-28-20.compute-1.amazonaws.com/?keywords=helloworld+foo+bar
+This is ApacheBench, Version 2.3 <$Revision: 1528965 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking ec2-54-164-28-20.compute-1.amazonaws.com (be patient).....done
+
+
+Server Software:        WSGIServer/0.1
+Server Hostname:        ec2-54-164-28-20.compute-1.amazonaws.com
+Server Port:            80
+
+Document Path:          /?keywords=helloworld+foo+bar
+Document Length:        302 bytes
+
+Concurrency Level:      50
+Time taken for tests:   0.622 seconds
+Complete requests:      100
+Failed requests:        0
+Total transferred:      52900 bytes
+HTML transferred:       30200 bytes
+Requests per second:    160.83 [#/sec] (mean)
+Time per request:       310.895 [ms] (mean)
+Time per request:       6.218 [ms] (mean, across all concurrent requests)
+Transfer rate:          83.08 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   1.5      0       6
+Processing:    10   27  65.7     17     616
+Waiting:        6   26  65.7     16     615
+Total:         13   27  66.3     17     621
+
+Percentage of the requests served within a certain time (ms)
+  50%     17
+  66%     17
+  75%     17
+  80%     18
+  90%     18
+  95%     27
+  98%    228
+  99%    621
+ 100%    621 (longest request)

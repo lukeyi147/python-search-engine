@@ -21,4 +21,4 @@ sudo pip install beaker
 The commands needed to start the server are as follows:
 git clone https://github.com/hhaider/python-search-engine.git
 cd python-search-engine/lab2/
-python server.py > logfile & 
+python server.py > logfile &
