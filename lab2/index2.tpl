@@ -41,12 +41,6 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="bs-component">
-              <div class="navbar navbar-default">
-                <div class="navbar-header">
-                </div>
-                <div class="navbar-collapse collapse navbar-responsive-collapse">
-                </div>
-              </div>
             </div>
           </div>
         </div>
