@@ -58,7 +58,7 @@
 	    <span class="input-group-addon">Search</span>
 	    <input class="form-control" type="text" name="keywords">
 	    <span class="input-group-btn">
-	      <button class="btn btn-default" type="submit" value="submit">Go</button>
+	      <button class="btn btn-default" type="submit" value="submit" name="submit">Go</button>
 	    </span>
 	  </div>
 	  </form>
