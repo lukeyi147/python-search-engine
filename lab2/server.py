@@ -45,7 +45,7 @@ def engine():
     # handle sign_out
     if request.GET.get('sign_out',''):
         session.delete()
-        bottle.redirect("http://0.0.0.0:80")
+        bottle.redirect("http://54.164.28.20")
         
     # handle submit
     if request.GET.get('submit',''):
@@ -128,7 +128,7 @@ def redirect_page():
     session['user_email'] = user_document['email']
     session.save()
 
-    bottle.redirect("http://0.0.0.0:80")
+    bottle.redirect("http://54.164.28.20")
     
     
 run(app = app, host='0.0.0.0', port=80, debug=True)
