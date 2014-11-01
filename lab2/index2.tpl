@@ -21,19 +21,23 @@
             <li><a href="#" target="_blank">{{u_email}}</a></li>
             %end
             %if sgn == 0:
-            <form action="/" method="get">
-              <button class="btn btn-default" type="submit" name="sign_in">Login</button>
-            </form>
+                <li>
+                <form action="/" method="get">
+                    <input type="submit" name="sign_in" value = "Login">
+                </form>
+                </li>
             %elif sgn == 1:
-            <form action="/" method="get">
-              <button class="btn btn-default" type="submit" name="sign_out">Logout</button>
-            </form>
+                <li>
+                <form action="/" method="get">
+                    <input type="submit" name="sign_out" value = "Logout">
+                </form>
+                </li>
             %end
           </ul>
         </div>
       </div>
     </div>
-    <br ><br ><br >
+<br ><br ><br >
     <div class="container">
       <div class="bs-docs-section clearfix">
         <div class="row">
