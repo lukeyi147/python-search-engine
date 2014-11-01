@@ -38,14 +38,14 @@ def engine():
         # flow step1
         flow = flow_from_clientsecrets("client_secret_864736965004-d6snoqp3e8d97nh17c9b7pgisaqhjff2.apps.googleusercontent.com.json",
             scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
-            redirect_uri="http://54.164.28.20:8080/redirect")
+            redirect_uri="http://0.0.0.0:80/redirect")
         uri = flow.step1_get_authorize_url()
         bottle.redirect(str(uri))
         
     # handle sign_out
     if request.GET.get('sign_out',''):
         session.delete()
-        bottle.redirect("http://54.164.28.20:8080")
+        bottle.redirect("http://0.0.0.0:80")
         
     # handle submit
     if request.GET.get('submit',''):
@@ -115,7 +115,7 @@ def redirect_page():
     code = request.query.get('code', '')
     flow = flow_from_clientsecrets("client_secret_864736965004-d6snoqp3e8d97nh17c9b7pgisaqhjff2.apps.googleusercontent.com.json",
         scope='https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email',
-        redirect_uri="http://54.164.28.20:8080/redirect")
+        redirect_uri="http://0.0.0.0:80/redirect")
     credentials = flow.step2_exchange(code)
     token = credentials.id_token['sub']
 
@@ -128,9 +128,9 @@ def redirect_page():
     session['user_email'] = user_document['email']
     session.save()
 
-    bottle.redirect("http://54.164.28.20:8080")
+    bottle.redirect("http://0.0.0.0:80")
     
     
-run(app = app, host='54.164.28.20', port=8080, debug=True)
+run(app = app, host='0.0.0.0', port=80, debug=True)
 
 
