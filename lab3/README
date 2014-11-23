@@ -1,0 +1,40 @@
+#################
+Live Application:
+The search engine is running live at 54.164.28.20
+
+
+###################
+Benchmarking Setup:
+To setup the benchmarking, you need to install apache2-utils using the following command:
+sudo apt­get install apache2­utils
+
+After apache2utils is installed, you can run the follwoing command to benchmark the application:
+ab -n 100 -c 50 http://ec2-54-164-28-20.compute-1.amazonaws.com/?keywords=helloworld+foo+bar
+
+Further system usage data metrics can be found on the AWS admin console
+
+
+#############
+Installation:
+To prepare the server, you need to install the following with apt-get:
+- git
+- python-pip
+
+The following dependencies are needed to be installed with pip:
+- bottle
+- oauth2client
+- google-api-python-client
+- beaker
+
+The commands to install the dependencies are as follows in order:
+sudo apt-get install git
+sudo apt-get install python-pip
+sudo pip install bottle
+sudo pip install oauth2client
+sudo pip install google-api-python-client
+sudo pip install beaker
+
+The commands needed to start the server are as follows:
+git clone https://github.com/hhaider/python-search-engine.git
+cd python-search-engine/lab2/
+python server.py > logfile &
