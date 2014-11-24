@@ -74,8 +74,11 @@ def engine():
         start = int(start)
 
         # get keywords from user and split by whitespace into keywords list
-        keywords = request.query['keywords'].split(" ")
-        keyword = keywords[0]
+        if(request.query.keywords):
+            keywords = request.query['keywords'].split(" ")
+            keyword = keywords[0]
+        else:
+            return template('errorindex')
 
         # ignore whitespace keywords
         if keyword != "":
