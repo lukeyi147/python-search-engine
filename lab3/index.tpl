@@ -26,7 +26,30 @@
 	</tr>
 %end
     <tr>
-        <td><a href="#">&laquo; previous</a> &nbsp; <a href="#">next &raquo;</a></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+
+        %if has_prev == 1:
+        <script>
+            var a = document.getElementById('prev'); //or grab it by tagname etc
+            a.href = updateURLParameter(window.location.href, 'start', '{{start-5}}');
+        </script>
+        <a href="#" id="prev">&laquo; previous</a>
+        %end 
+
+        &nbsp; 
+
+        %if has_next == 1:
+        <script>
+            var a = document.getElementById('next'); //or grab it by tagname etc
+            a.href = updateURLParameter(window.location.href, 'start', '{{start+5}}');
+        </script>
+        <a href="#" id="next">next &raquo;</a>
+        %en
+
+        </td>
     </tr>
 </table>
 
@@ -39,3 +62,29 @@
         </tr>
     %end
     </table>
+
+<script>
+/**
+ * http://stackoverflow.com/a/10997390/11236
+ */
+function updateURLParameter(url, param, paramVal){
+    var newAdditionalURL = "";
+    var tempArray = url.split("?");
+    var baseURL = tempArray[0];
+    var additionalURL = tempArray[1];
+    var temp = "";
+    if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (i=0; i<tempArray.length; i++){
+            if(tempArray[i].split('=')[0] != param){
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+        }
+    }
+
+    var rows_txt = temp + "" + param + "=" + paramVal;
+    return baseURL + "?" + newAdditionalURL + rows_txt;
+}
+var newURL = 
+</script>

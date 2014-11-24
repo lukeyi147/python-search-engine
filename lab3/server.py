@@ -61,8 +61,15 @@ def engine():
         # result dictionary contains (word, count) info of current keywords entered by user
         results = []
 
-        # pagination offset
-        start = request.query['start']
+        # pagination links
+        has_prev = False
+        has_next = False
+
+        # pagination start offset
+        if(request.query['start']):
+            start = request.query['start']
+        else:
+            start = 0
 
         # get keywords from user and split by whitespace into keywords list
         keywords = request.query['keywords'].split(" ")
@@ -83,6 +90,19 @@ def engine():
                 cur.execute("SELECT doc_url, page_rank FROM documentIndex WHERE doc_id IN (%s) ORDER BY page_rank DESC LIMIT ?, ?" % ("?," * (len(doc_ids)-2))[:-1], doc_ids )
                 for row in cur:
                     results.append((row[0], row[1]))
+
+                # set has_prev and has_next for pagination
+                if start == 0:
+                    has_prev = False
+                else:
+                    has_prev = True
+                if len(results) == page_limit:
+                    has_next = True
+                else
+                    has_next = False
+
+
+
  
 
 
@@ -103,9 +123,9 @@ def engine():
             history = list(hist[user_email])
             history.reverse()
 
-            return template('index', results = results, history = history, sgn = signed, u_email = user_email)
+            return template('index', results = results, history = history, sgn = signed, u_email = user_email, start = start, page_limit = page_limit, has_next = has_next, has_prev = has_prev)
         else:
-            return template('index', results = results, history = 0, sgn = signed, u_email = 0)
+            return template('index', results = results, history = 0, sgn = signed, u_email = 0, start = start, page_limit = page_limit, has_next = has_next, has_prev = has_prev)
 
     else:
         # user didn't submit keywords, display empty results
@@ -118,9 +138,9 @@ def engine():
             history = list(hist[user_email])
             history.reverse()
 
-            return template('index', results = results, history = history, sgn = signed, u_email = user_email)
+            return template('index', results = results, history = history, sgn = signed, u_email = user_email, start = 0, page_limit = 0, has_next = 0, has_prev = 0)
         else: 
-            return template('index', results = results, history = 0, sgn = signed, u_email = 0)
+            return template('index', results = results, history = 0, sgn = signed, u_email = 0, start = 0, page_limit = 0, has_next = 0, has_prev = 0)
         
 @route('/redirect', method='GET')
 def redirect_page():
