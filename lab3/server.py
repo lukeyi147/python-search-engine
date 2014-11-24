@@ -123,7 +123,7 @@ def engine():
         else:
             return template('index', results = results, history = 0, sgn = signed, u_email = 0, start = start, page_limit = page_limit, has_next = has_next, has_prev = has_prev)
 
-    elif request.GET.get('',''):
+    elif not request.query:
         # user didn't submit keywords, display empty results
         results = {}        
         if signed == 1:
