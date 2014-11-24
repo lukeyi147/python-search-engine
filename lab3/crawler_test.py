@@ -1,5 +1,6 @@
 import unittest
 from crawler import crawler
+from crawler import page_rank
 
 
 # Here's our "unit tests".
@@ -9,13 +10,16 @@ class IsOk(unittest.TestCase):
 		bot = crawler(None, "urls.txt")
 		bot.crawl(depth=2)
 		inverted_index = bot.inverted_index()
-		resolved_inverted_index = bot.resolved_inverted_index()
+		print inverted_index
+		expected_inverted_index = {1: set([1, 3]), 2: set([1]), 3: set([2])}
 
-		expected_inverted_index = {1: set([1, 2]), 2: set([1, 2])}
-		expected_resolved_inverted_index = {u'index2': set(['http://hhaider.github.io/mygithubpage/index.html', u'http://hhaider.github.io/mygithubpage/index2.html']), u'index': set(['http://hhaider.github.io/mygithubpage/index.html', u'http://hhaider.github.io/mygithubpage/index2.html'])}
+		
+		got_page_rank = page_rank(bot.links())
+		expected_page_rank = {1: 0.05000000000000001, 2: 0.092500000000000027, 3: 0.12862500000000002}
+		
 
 		self.failUnless(inverted_index == expected_inverted_index)
-		self.failUnless(resolved_inverted_index == expected_resolved_inverted_index)
+		self.failUnless(got_page_rank == expected_page_rank)
 
 def main():
 	unittest.main()
