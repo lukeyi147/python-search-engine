@@ -25,6 +25,9 @@
         <td>{{result[1]}}</td>
 	</tr>
 %end
+    <tr>
+        <td><a href="#">&laquo; previous</a> &nbsp; <a href="#">next &raquo;</a></td>
+    </tr>
 </table>
 
 %if sgn == 1:
