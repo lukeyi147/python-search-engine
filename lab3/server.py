@@ -78,7 +78,9 @@ def engine():
                 doc_ids = [ ]
                 for row in cur:
                     doc_ids.append(row[0])
-                cur.execute("SELECT doc_url, page_rank FROM documentIndex WHERE doc_id IN (%s) ORDER BY page_rank DESC LIMIT ?, ?" % ("?," * len(doc_ids))[:-1], doc_ids, start, page_limit )
+                doc_ids.append(start)
+                doc_ids.append(page_limit)
+                cur.execute("SELECT doc_url, page_rank FROM documentIndex WHERE doc_id IN (%s) ORDER BY page_rank DESC LIMIT ?, ?" % ("?," * len(doc_ids)-2)[:-1], doc_ids )
                 for row in cur:
                     results.append((row[0], row[1]))
  
