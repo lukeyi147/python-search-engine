@@ -12,6 +12,9 @@ import sqlite3 as lite
 # contains {user_email:[history]} dict
 hist = {}
 
+# limit of results per page
+page_limit = 5
+
 # init beaker file based session
 session_opts = {
     'session.type': 'file',
@@ -58,6 +61,9 @@ def engine():
         # result dictionary contains (word, count) info of current keywords entered by user
         results = []
 
+        # pagination offset
+        start = request.query['start']
+
         # get keywords from user and split by whitespace into keywords list
         keywords = request.query['keywords'].split(" ")
         keyword = keywords[0]
@@ -72,7 +78,7 @@ def engine():
                 doc_ids = [ ]
                 for row in cur:
                     doc_ids.append(row[0])
-                cur.execute("SELECT doc_url, page_rank FROM documentIndex WHERE doc_id IN (%s) ORDER BY page_rank DESC" % ("?," * len(doc_ids))[:-1], doc_ids )
+                cur.execute("SELECT doc_url, page_rank FROM documentIndex WHERE doc_id IN (%s) ORDER BY page_rank DESC LIMIT ?, ?" % ("?," * len(doc_ids))[:-1], doc_ids, start, page_limit )
                 for row in cur:
                     results.append((row[0], row[1]))
  
