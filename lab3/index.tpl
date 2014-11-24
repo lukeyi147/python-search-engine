@@ -57,24 +57,28 @@ function updateURLParameter(url, param, paramVal){
 
         %if has_prev == 1:
         <script>
-            var a = document.getElementById('prev'); //or grab it by tagname etc
-            a.href = updateURLParameter(window.location.href, 'start', '{{int(start)-int(page_limit)}}');
+            var prev = updateURLParameter(window.location.href, 'start', '{{int(start)-int(page_limit)}}');
         </script>
-        <a href="#" id="prev">&laquo; previous</a>
+        <a href="javascript:document.location=prev" id="prev">&laquo; previous</a>
+        %end 
+
+        %if has_prev == 0:
+        &laquo; previous
         %end 
 
         &nbsp; 
 
         %if has_next == 1:
         <script>
-            var a = document.getElementById('next'); //or grab it by tagname etc
-            var x = updateURLParameter(window.location.href, 'start', '{{int(start)+int(page_limit)}}');
-            document.write(x);
-            a.href = x;
+            var next = updateURLParameter(window.location.href, 'start', '{{int(start)+int(page_limit)}}');
         </script>
-        <a href="#" id="next">next &raquo;</a>
+        <a href="javascript:document.location=next" id="next">next &raquo;</a>
         %end
 
+        %if has_next == 0:
+        next &raquo;
+        %end 
+        
         </td>
     </tr>
 </table>
