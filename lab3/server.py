@@ -98,7 +98,7 @@ def engine():
                     has_prev = True
                 if len(results) == page_limit:
                     has_next = True
-                else
+                else:
                     has_next = False
 
 
