@@ -66,10 +66,8 @@ def engine():
         has_next = False
 
         # pagination start offset
-        if(request.query['start']):
-            start = request.query['start']
-        else:
-            start = 0
+        start = request.query['start'] or '0'
+        start = int(start)
 
         # get keywords from user and split by whitespace into keywords list
         keywords = request.query['keywords'].split(" ")
