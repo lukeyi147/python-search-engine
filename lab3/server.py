@@ -123,9 +123,24 @@ def engine():
         else:
             return template('index', results = results, history = 0, sgn = signed, u_email = 0, start = start, page_limit = page_limit, has_next = has_next, has_prev = has_prev)
 
-    else:
-            return template('errorindex')
+    elif request.GET.get('',''):
+        # user didn't submit keywords, display empty results
+        results = {}        
+        if signed == 1:
+            if user_email not in hist:    #if user not in dictionary
+                hist.update({user_email:[]})
+
+            # history shows most recent first
+            history = list(hist[user_email])
+            history.reverse()
+
+            return template('index', results = results, history = history, sgn = signed, u_email = user_email, start = 0, page_limit = 0, has_next = 0, has_prev = 0)
+        else: 
+            return template('index', results = results, history = 0, sgn = signed, u_email = 0, start = 0, page_limit = 0, has_next = 0, has_prev = 0)
         
+    else:
+        return template('errorindex')
+
 @route('/redirect', method='GET')
 def redirect_page():
     # get session
