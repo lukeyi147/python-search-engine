@@ -2,18 +2,6 @@
 Live Application:
 The search engine is running live at 54.164.28.20
 
-
-###################
-Benchmarking Setup:
-To setup the benchmarking, you need to install apache2-utils using the following command:
-sudo apt­get install apache2­utils
-
-After apache2utils is installed, you can run the follwoing command to benchmark the application:
-ab -n 100 -c 50 http://ec2-54-164-28-20.compute-1.amazonaws.com/?keywords=helloworld+foo+bar
-
-Further system usage data metrics can be found on the AWS admin console
-
-
 #############
 Installation:
 To prepare the server, you need to install the following with apt-get:
@@ -38,3 +26,107 @@ The commands needed to start the server are as follows:
 git clone https://github.com/hhaider/python-search-engine.git
 cd python-search-engine/lab2/
 python server.py > logfile &
+
+
+
+############################
+		BENCHMARKING 
+############################
+
+
+###################
+Benchmarking Setup:
+To setup the benchmarking, you need to install apache2-utils using the following command:
+sudo apt­get install apache2­utils
+
+After apache2utils is installed, you can run the follwoing command to benchmark the application:
+ab -n 100 -c 50 http://ec2-54-164-28-20.compute-1.amazonaws.com/?keywords=helloworld+foo+bar&submit=submit
+
+Further system usage data metrics can be found on the AWS admin console
+
+#####################
+Benchmarking Results:
+
+Maximum number of connections that can be handled by the server before any
+connection drops:
+50 concurrent connections
+
+
+Maximum number of requests per second (RPS) that can be sustained by the server
+when operating with maximum number of connections:
+Requests per second:	124.65 [#/sec] (mean)
+
+Average and 99 percentile of response time or latency per request:
+Average: 			8.023 [ms] (mean, accross all concurrent rquests)
+99th Percentile: 	802 [ms]
+
+
+Utilization of CPU, memory, disk IO, and network when max performance is sustained:
+CPU: 			45%
+Memory:			3.0%
+Disk IO:		0%
+Network In:		160,000 Bytes
+Network Out:	300,000 Bytes
+
+
+
+############################
+Differences of benchmarking:
+
+The benchmarking results for lab 3 are different from lab 2.
+The maximum number of concurrent connection remained 50.
+The requests per seconds has regressed from 160.80 to 124.65.
+The average response time has regressed from 6.218 ms to 8.023 ms.
+The 99th percentile has regressed from 621 ms to 802 ms.
+The CPU utilization has increased from %40 to %45.
+The memory utilization has increased from 2.7% to 3.0%
+The network in and network out have both increased from 150,000 Bytes, 250,000 Bytes to 160,000 Bytes, 300,000 Bytes respectivly. 
+
+The reason for the decrease in performance could be due to the added javascript scripts that handle pagination, and are also a result of the multiple mysqlite queries that are run for each keyword, a total of 3 queries are run per keyword at minimum, if the number of results exceed page_limit, then 1 extra query is run for each extra page_limit mutliples of the result set remaining.
+
+
+#######################
+Output of benchmarking:
+
+ubuntu@ip-172-31-53-215:~$ This is ApacheBench, Version 2.3 <$Revision: 1528965 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking ec2-54-164-28-20.compute-1.amazonaws.com (be patient).....done
+
+
+Server Software:        WSGIServer/0.1
+Server Hostname:        ec2-54-164-28-20.compute-1.amazonaws.com
+Server Port:            80
+
+Document Path:          /?keywords=helloworld+foo+bar
+Document Length:        546 bytes
+
+Concurrency Level:      50
+Time taken for tests:   0.802 seconds
+Complete requests:      100
+Failed requests:        0
+Total transferred:      77300 bytes
+HTML transferred:       54600 bytes
+Requests per second:    124.65 [#/sec] (mean)
+Time per request:       401.139 [ms] (mean)
+Time per request:       8.023 [ms] (mean, across all concurrent requests)
+Transfer rate:          94.09 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   1.9      0       7
+Processing:     7   25  82.6     13     795
+Waiting:        4   24  82.6     12     794
+Total:         12   25  83.4     13     802
+
+Percentage of the requests served within a certain time (ms)
+  50%     13
+  66%     13
+  75%     14
+  80%     14
+  90%     14
+  95%     22
+  98%    225
+  99%    802
+ 100%    802 (longest request)
