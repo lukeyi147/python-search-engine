@@ -92,7 +92,7 @@ def engine():
                     results.append((row[0], row[1]))
 
                 # set has_prev and has_next for pagination
-                if start == 0:
+                if int(start) == 0:
                     has_prev = False
                 else:
                     has_prev = True
