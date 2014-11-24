@@ -47,7 +47,7 @@
             a.href = updateURLParameter(window.location.href, 'start', '{{int(start)+int(page_limit)}}');
         </script>
         <a href="#" id="next">next &raquo;</a>
-        %en
+        %end
 
         </td>
     </tr>
