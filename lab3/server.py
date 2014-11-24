@@ -62,7 +62,7 @@ def engine():
     # handle submit
     elif request.GET.get('submit',''):
  
-        # result dictionary contains (word, count) info of current keywords entered by user
+        # result dictionary contains (doc_url, page_rank) of docs containing word_id of keyword
         results = []
 
         # pagination links
@@ -75,25 +75,35 @@ def engine():
 
         # get keywords from user and split by whitespace into keywords list
         if(request.query.keywords):
+            # get only first keyword
             keywords = request.query['keywords'].split(" ")
             keyword = keywords[0]
         else:
+            # error if no keyword provided with submit
             return template('errorindex')
 
         # ignore whitespace keywords
         if keyword != "":
+            # query to get word_id
             cur.execute("SELECT word_id FROM lexicon where word = ?", (keyword,))
             result = cur.fetchone()
             if(result):
+                # get word_id from keyword
                 word_id = result[0]
-                cur.execute("SELECT doc_id FROM invertedIndex WHERE word_id = ?", (word_id,))
+
+                # query to get doc_ids that contain word_id
                 doc_ids = [ ]
+                cur.execute("SELECT doc_id FROM invertedIndex WHERE word_id = ?", (word_id,))
                 for row in cur:
                     doc_ids.append(row[0])
+
+                # query to get doc_urls and page_rank of doc_id in doc_ids based on page_limit LIMIT
+                # dirty hack to bind start and page_limit to query string
                 doc_ids.append(start)
                 doc_ids.append(page_limit)
                 cur.execute("SELECT doc_url, page_rank FROM documentIndex WHERE doc_id IN (%s) ORDER BY page_rank DESC LIMIT ?, ?" % ("?," * (len(doc_ids)-2))[:-1], doc_ids )
                 for row in cur:
+                    # add doc_url and page_rank to result list
                     results.append((row[0], row[1]))
 
                 # set has_prev and has_next for pagination
@@ -106,7 +116,6 @@ def engine():
                 else:
                     has_next = False
         ##################
-        
         if signed == 1:
             if user_email not in hist:    #if user not in dictionary
                 hist.update({user_email:[]})
@@ -142,6 +151,7 @@ def engine():
             return template('index', results = results, history = 0, sgn = signed, u_email = 0, start = 0, page_limit = 0, has_next = 0, has_prev = 0)
         
     else:
+        # not recognized query
         return template('errorindex')
 
 @route('/redirect', method='GET')
