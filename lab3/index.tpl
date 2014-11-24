@@ -68,7 +68,9 @@ function updateURLParameter(url, param, paramVal){
         %if has_next == 1:
         <script>
             var a = document.getElementById('next'); //or grab it by tagname etc
-            a.href = updateURLParameter(window.location.href, 'start', '{{int(start)+int(page_limit)}}');
+            var x = updateURLParameter(window.location.href, 'start', '{{int(start)+int(page_limit)}}');
+            document.write(x);
+            a.href = x;
         </script>
         <a href="#" id="next">next &raquo;</a>
         %end
