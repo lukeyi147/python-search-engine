@@ -19,7 +19,7 @@
 <table id="results">
 %for result in results:
 	<tr>
-		<td><a href="{{result}}">{{result}}</a></td>
+		<td><a href="{{result[0]}}">{{result[0]}}</a> ( {{result[1]}} )</td>
 	</tr>
 %end
 </table>
