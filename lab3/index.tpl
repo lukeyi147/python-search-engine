@@ -34,7 +34,7 @@
         %if has_prev == 1:
         <script>
             var a = document.getElementById('prev'); //or grab it by tagname etc
-            a.href = updateURLParameter(window.location.href, 'start', '{{start-5}}');
+            a.href = updateURLParameter(window.location.href, 'start', '{{start-page_limit}}');
         </script>
         <a href="#" id="prev">&laquo; previous</a>
         %end 
@@ -44,7 +44,7 @@
         %if has_next == 1:
         <script>
             var a = document.getElementById('next'); //or grab it by tagname etc
-            a.href = updateURLParameter(window.location.href, 'start', '{{start+5}}');
+            a.href = updateURLParameter(window.location.href, 'start', '{{start+page_limit}}');
         </script>
         <a href="#" id="next">next &raquo;</a>
         %en
