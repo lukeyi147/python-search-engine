@@ -7,6 +7,7 @@ from googleapiclient.discovery import build
 from beaker.middleware import SessionMiddleware
 import bottle
 import httplib2
+import sqlite3 as lite
 
 # contains {user_email:[history]} dict
 hist = {}
