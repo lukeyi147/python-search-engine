@@ -477,9 +477,11 @@ if __name__ == "__main__":
     # print lexicon
     print "\n############\n"
     print "Lexicon DB: "
-    cur.execute("SELECT word FROM lexicon where word_id = 1")
-    for row in cur:
-        print row[0]
+    keyword = "comfadfafdafwefputer"
+    cur.execute("SELECT word_id FROM lexicon where word = ?", (keyword,))
+    keyword_id = cur.fetchone()
+    if(keyword_id):
+        print keyword_id[0]
 
     # print inverted index
     print ""
@@ -492,7 +494,7 @@ if __name__ == "__main__":
     # print document index with page rank
     print ""
     print "Document Index DB: "
-    cur.execute("SELECT * FROM documentIndex ORDER BY page_rank DESC", )
+    cur.execute("SELECT * FROM documentIndex WHERE doc_id IN (10, 11, 12, 13) ORDER BY page_rank DESC", )
     for row in cur:
         print row
 

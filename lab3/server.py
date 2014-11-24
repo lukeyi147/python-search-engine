@@ -25,6 +25,10 @@ def engine():
     # global hist
     global hist
 
+    # connection
+    con = lite.connect("engine.db")
+    cur = con.cursor()
+
     # get session
     session = bottle.request.environ['beaker.session']
 
@@ -51,23 +55,27 @@ def engine():
     if request.GET.get('submit',''):
  
         # result dictionary contains (word, count) info of current keywords entered by user
-        results = {}
+        results = []
 
         # get keywords from user and split by whitespace into keywords list
         keywords = request.query['keywords'].split(" ")
+        keyword = keywords[0]
 
-        #############################
-        # iterate over keywords entered by user
-        for keyword in keywords:
+        # ignore whitespace keywords
+        if keyword != "":
+            cur.execute("SELECT word_id FROM lexicon where word = ?", (keyword,))
+            result = cur.fetchone()
+            if(result):
+                word_id = result[0]
+                cur.execute("SELECT doc_id FROM invertedIndex WHERE word_id = ?", (word_id,))
+                doc_ids = [ ]
+                for row in cur:
+                    doc_ids.append(row[0])
+                cur.execute("SELECT doc_url FROM documentIndex WHERE doc_id IN (%s) ORDER BY page_rank DESC" % ("?," * len(doc_ids))[:-1], doc_ids )
+                for row in cur:
+                    results.append(row[0])
+ 
 
-            # ignore whitespace keywords
-            if keyword != "":
-
-                # insert keyword into current results, else increment value
-                if not keyword in results:
-                    results[keyword] = 1
-                else:
-                    results[keyword] += 1
 
         ##################
         
@@ -76,9 +84,8 @@ def engine():
                 hist.update({user_email:[]})
 
             # add to end of list
-            for keyword in keywords:
-                if keyword != "":
-                    hist[user_email].append(keyword)
+            if keyword != "":
+                hist[user_email].append(keyword)
 
             # truncate list to only 10 most recent elemnts
             hist[user_email] = hist[user_email][-10:]

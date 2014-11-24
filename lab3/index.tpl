@@ -17,10 +17,9 @@
 
 <strong>Results:</strong>
 <table id="results">
-%for keyword in results:
+%for result in results:
 	<tr>
-		<td>{{keyword}}</td>
-		<td>{{results[keyword]}}</td>
+		<td><a href="{{result}}">{{result}}</a></td>
 	</tr>
 %end
 </table>
