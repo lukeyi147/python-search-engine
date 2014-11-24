@@ -62,6 +62,7 @@
         </tr>
     %end
     </table>
+%end
 
 <script>
 /**
