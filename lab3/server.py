@@ -23,6 +23,20 @@ session_opts = {
 }
 
 app = SessionMiddleware(bottle.app(), session_opts)
+
+@error(404)
+def mistake404(code):
+    # get session
+    session = bottle.request.environ['beaker.session']
+
+    # check if user signed in
+    signed = 'user_email' in session
+
+    if signed:
+        user_email = session['user_email']
+        return template('errorindex', sgn = signed, user_email = user_email)
+    else:
+        return template('errorindex', sgn = signed, user_email = 0)
      
 @route('/', method='GET')
 def engine():
