@@ -1,3 +1,27 @@
+<script>
+/**
+ * http://stackoverflow.com/a/10997390/11236
+ */
+function updateURLParameter(url, param, paramVal){
+    var newAdditionalURL = "";
+    var tempArray = url.split("?");
+    var baseURL = tempArray[0];
+    var additionalURL = tempArray[1];
+    var temp = "";
+    if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (i=0; i<tempArray.length; i++){
+            if(tempArray[i].split('=')[0] != param){
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+        }
+    }
+
+    var rows_txt = temp + "" + param + "=" + paramVal;
+    return baseURL + "?" + newAdditionalURL + rows_txt;
+}
+</script>
 <h1><font color="#1645AE">Si</font><font color="#D62408">mp</font><font color="#EFBA00">le</font><font color="#1645AE">Se</font><font color="#007D08">ar</font><font color="#D62408">ch</font></h1>
 
 <form action="/" method="get">
@@ -63,29 +87,3 @@
     %end
     </table>
 %end
-
-<script>
-/**
- * http://stackoverflow.com/a/10997390/11236
- */
-function updateURLParameter(url, param, paramVal){
-    var newAdditionalURL = "";
-    var tempArray = url.split("?");
-    var baseURL = tempArray[0];
-    var additionalURL = tempArray[1];
-    var temp = "";
-    if (additionalURL) {
-        tempArray = additionalURL.split("&");
-        for (i=0; i<tempArray.length; i++){
-            if(tempArray[i].split('=')[0] != param){
-                newAdditionalURL += temp + tempArray[i];
-                temp = "&";
-            }
-        }
-    }
-
-    var rows_txt = temp + "" + param + "=" + paramVal;
-    return baseURL + "?" + newAdditionalURL + rows_txt;
-}
-var newURL = 
-</script>
